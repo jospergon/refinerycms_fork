@@ -1,7 +1,7 @@
 class CreateRefinerycmsPagesSchema < ActiveRecord::Migration
   def up
-    create_table :refinery_page_parts do |t|
-      t.integer  :refinery_page_id
+    create_table :betycms_page_parts do |t|
+      t.integer  :betycms_page_id
       t.string   :title
       t.text     :body
       t.integer  :position
@@ -9,10 +9,10 @@ class CreateRefinerycmsPagesSchema < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :refinery_page_parts, :id
-    add_index :refinery_page_parts, :refinery_page_id
+    add_index :betycms_page_parts, :id
+    add_index :betycms_page_parts, :betycms_page_id
 
-    create_table :refinery_pages do |t|
+    create_table :betycms_pages do |t|
       t.integer   :parent_id
       t.string    :path
       t.string    :slug
@@ -31,11 +31,11 @@ class CreateRefinerycmsPagesSchema < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :refinery_pages, :depth
-    add_index :refinery_pages, :id
-    add_index :refinery_pages, :lft
-    add_index :refinery_pages, :parent_id
-    add_index :refinery_pages, :rgt
+    add_index :betycms_pages, :depth
+    add_index :betycms_pages, :id
+    add_index :betycms_pages, :lft
+    add_index :betycms_pages, :parent_id
+    add_index :betycms_pages, :rgt
 
     Refinery::PagePart.create_translation_table!({
       :body => :text
@@ -50,8 +50,8 @@ class CreateRefinerycmsPagesSchema < ActiveRecord::Migration
   end
 
   def down
-    drop_table :refinery_page_parts
-    drop_table :refinery_pages
+    drop_table :betycms_page_parts
+    drop_table :betycms_pages
     Refinery::PagePart.drop_translation_table!
     Refinery::Page.drop_translation_table!
   end

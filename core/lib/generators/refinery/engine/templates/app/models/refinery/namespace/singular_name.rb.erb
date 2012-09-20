@@ -2,7 +2,7 @@ module Refinery
   module <%= namespacing %>
     class <%= class_name %> < Refinery::Core::BaseModel
 <% if table_name == namespacing.underscore.pluralize -%>
-      self.table_name = 'refinery_<%= plural_name %>'
+      self.table_name = 'betycms_<%= plural_name %>'
 <% end %>
       attr_accessible <%= names_for_attr_accessible.map { |n| ":#{n}" }.join(', ') %>, :position
 <% if localized? -%>

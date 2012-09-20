@@ -2,6 +2,8 @@ require 'dragonfly'
 
 module Refinery
   class Resource < Refinery::Core::BaseModel
+    set_table_name "betycms_resources"
+
     ::Refinery::Resources::Dragonfly.setup!
 
     include Resources::Validators

@@ -1,5 +1,6 @@
 module Refinery
   class PagePart < Refinery::Core::BaseModel
+    set_table_name "betycms_page_parts"
 
     attr_accessible :title, :content, :position, :body, :refinery_page_id
     belongs_to :page, :foreign_key => :refinery_page_id

@@ -3,6 +3,8 @@ require 'friendly_id'
 
 module Refinery
   class User < Refinery::Core::BaseModel
+    set_table_name "betycms_users"
+
     extend FriendlyId
 
     has_and_belongs_to_many :roles, :join_table => :refinery_roles_users

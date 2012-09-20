@@ -1,28 +1,28 @@
 class CreateRefinerycmsAuthenticationSchema < ActiveRecord::Migration
   def change
     # Postgres apparently requires the roles_users table to exist before creating the roles table.
-    create_table :refinery_roles_users, :id => false do |t|
+    create_table :betycms_roles_users, :id => false do |t|
       t.integer :user_id
       t.integer :role_id
     end
 
-    add_index :refinery_roles_users, [:role_id, :user_id]
-    add_index :refinery_roles_users, [:user_id, :role_id]
+    add_index :betycms_roles_users, [:role_id, :user_id]
+    add_index :betycms_roles_users, [:user_id, :role_id]
 
-    create_table :refinery_roles do |t|
+    create_table :betycms_roles do |t|
       t.string :title
     end
 
-    create_table :refinery_user_plugins do |t|
+    create_table :betycms_user_plugins do |t|
       t.integer :user_id
       t.string  :name
       t.integer :position
     end
 
-    add_index :refinery_user_plugins, :name
-    add_index :refinery_user_plugins, [:user_id, :name], :unique => true
+    add_index :betycms_user_plugins, :name
+    add_index :betycms_user_plugins, [:user_id, :name], :unique => true
 
-    create_table :refinery_users do |t|
+    create_table :betycms_users do |t|
       t.string    :username,            :null => false
       t.string    :email,               :null => false
       t.string    :encrypted_password,  :null => false
@@ -38,6 +38,6 @@ class CreateRefinerycmsAuthenticationSchema < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :refinery_users, :id
+    add_index :betycms_users, :id
   end
 end

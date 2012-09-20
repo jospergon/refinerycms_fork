@@ -1,6 +1,6 @@
 class CreateRefinerycmsImagesSchema < ActiveRecord::Migration
   def change
-    create_table :refinery_images do |t|
+    create_table :betycms_images do |t|
       t.string   :image_mime_type
       t.string   :image_name
       t.integer  :image_size
