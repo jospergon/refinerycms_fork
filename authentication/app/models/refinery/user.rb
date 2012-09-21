@@ -7,7 +7,7 @@ module Refinery
 
     extend FriendlyId
 
-    has_and_belongs_to_many :roles, :join_table => :refinery_roles_users
+    has_and_belongs_to_many :roles, :join_table => :betycms_roles_users
 
     has_many :plugins, :class_name => "UserPlugin", :order => "position ASC", :dependent => :destroy
     friendly_id :username

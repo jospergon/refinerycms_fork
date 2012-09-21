@@ -5,6 +5,7 @@ require 'friendly_id'
 
 module Refinery
   class Page < Core::BaseModel
+    set_table_name "betycms_pages"
     extend FriendlyId
 
     # when collecting the pages path how is each of the pages seperated?
@@ -13,6 +14,7 @@ module Refinery
     translates :title, :menu_title, :custom_slug, :slug, :include => :seo_meta
 
     class Translation
+      set_table_name "betycms_page_translations"
       is_seo_meta
       attr_accessible :browser_title, :meta_description, :meta_keywords, :locale
     end
@@ -46,7 +48,7 @@ module Refinery
                                 :menu_title, :browser_title, :all_page_part_content]
 
     has_many :parts,
-             :foreign_key => :refinery_page_id,
+             :foreign_key => :betycms_page_id,
              :class_name => '::Refinery::PagePart',
              :order => 'position ASC',
              :inverse_of => :page,
