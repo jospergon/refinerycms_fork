@@ -75,8 +75,8 @@ describe "manage users" do
 
     it "allows to destroy only regular user" do
       visit refinery.admin_users_path
-      page.should have_selector("a[href='/refinery/users/#{user.username}']")
-      page.should have_no_selector("a[href='/refinery/users/refinerycms']")
+      page.should have_selector("a[href='/#{Refinery::Core.config.admin_prefix_path}/users/#{user.username}']")
+      page.should have_no_selector("a[href='/#{Refinery::Core.config.admin_prefix_path}/users/refinerycms']")
 
       click_link "Remove this user"
       page.should have_content("'#{user.username}' was successfully removed.")

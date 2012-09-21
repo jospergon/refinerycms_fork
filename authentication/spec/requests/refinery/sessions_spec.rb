@@ -16,7 +16,7 @@ module Refinery
     it "shows login form" do
       page.should have_content("Hello! Please sign in.")
       page.should have_content("I forgot my password")
-      page.should have_selector("a[href*='/refinery/users/password/new']")
+      page.should have_selector("a[href*='/#{Refinery::Core.config.admin_prefix_path}/users/password/new']")
     end
 
     context "when supplied data is valid" do
@@ -88,7 +88,7 @@ module Refinery
       it "shows login form" do
         page.should have_content("Hello! Please sign in.")
         page.should have_content("I forgot my password")
-        page.should have_selector("a[href*='/refinery/users/password/new']")
+        page.should have_selector("a[href*='/#{Refinery::Core.config.admin_prefix_path}/users/password/new']")
       end
 
       it "redirects to the protected path on login" do
