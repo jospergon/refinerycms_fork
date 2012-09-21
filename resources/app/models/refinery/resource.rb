@@ -2,7 +2,7 @@ require 'dragonfly'
 
 module Refinery
   class Resource < Refinery::Core::BaseModel
-    set_table_name "betycms_resources"
+    self.table_name = "betycms_resources"
 
     ::Refinery::Resources::Dragonfly.setup!
 

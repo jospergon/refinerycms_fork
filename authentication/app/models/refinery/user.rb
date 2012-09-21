@@ -3,7 +3,7 @@ require 'friendly_id'
 
 module Refinery
   class User < Refinery::Core::BaseModel
-    set_table_name "betycms_users"
+    self.table_name = "betycms_users"
 
     extend FriendlyId
 
