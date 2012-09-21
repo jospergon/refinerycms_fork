@@ -1,5 +1,3 @@
-<h1>Esta es mi gema local</h1>
-
 <section id='records' class='tree'>
   <% cache_if(Refinery::Pages.cache_pages_backend, [Refinery::Core.base_cache_key, "pages_backend", Globalize.locale].join('_')) do %>
     <%= render 'records' %>
