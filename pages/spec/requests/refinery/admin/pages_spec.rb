@@ -611,14 +611,14 @@ module Refinery
             before { Refinery::Pages.absolute_page_links = false }
 
             it "shows Russian pages if we're editing the Russian locale" do
-              visit 'refinery/pages_dialogs/link_to?wymeditor=true&switch_locale=ru'
+              visit "#{Refinery::Core.config.admin_prefix_path}/pages_dialogs/link_to?wymeditor=true&switch_locale=ru"
 
               page.should have_content("About Ru")
               page.should have_selector("a[href='/ru/about-ru']")
             end
 
             it "shows default to the default locale if no query string is added" do
-              visit 'refinery/pages_dialogs/link_to?wymeditor=true'
+              visit "#{Refinery::Core.config.admin_prefix_path}/pages_dialogs/link_to?wymeditor=true"
 
               page.should have_content("About")
               page.should have_selector("a[href='/about']")
@@ -629,14 +629,14 @@ module Refinery
             before { Refinery::Pages.absolute_page_links = true }
 
             it "shows Russian pages if we're editing the Russian locale" do
-              visit 'refinery/pages_dialogs/link_to?wymeditor=true&switch_locale=ru'
+              visit "#{Refinery::Core.config.admin_prefix_path}/pages_dialogs/link_to?wymeditor=true&switch_locale=ru"
 
               page.should have_content("About Ru")
               page.should have_selector("a[href='http://www.example.com/ru/about-ru']")
             end
 
             it "shows default to the default locale if no query string is added" do
-              visit 'refinery/pages_dialogs/link_to?wymeditor=true'
+              visit "#{Refinery::Core.config.admin_prefix_path}/pages_dialogs/link_to?wymeditor=true"
 
               page.should have_content("About")
               page.should have_selector("a[href='http://www.example.com/about']")

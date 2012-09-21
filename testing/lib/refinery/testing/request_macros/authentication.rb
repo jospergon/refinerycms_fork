@@ -4,6 +4,9 @@ module Refinery
       module Authentication
         def login_refinery_user
           before do
+
+            visit refinery.admin_pages_path
+
             password = '123456'
             refinery_user = FactoryGirl.create(:refinery_user, {
               :username => "refinerycms",
