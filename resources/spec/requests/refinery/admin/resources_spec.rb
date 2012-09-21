@@ -16,7 +16,7 @@ module Refinery
       it "shows upload file link" do
         visit refinery.admin_resources_path
         page.should have_content("Upload new file")
-        page.should have_selector("a[href*='/refinery/resources/new']")
+        page.should have_selector("a[href*='/#{Refinery::Core.config.admin_prefix_path}/resources/new']")
       end
 
 
@@ -80,12 +80,12 @@ module Refinery
         it "updates file" do
           visit refinery.admin_resources_path
           page.should have_content("Refinery Is Awesome.txt")
-          page.should have_selector("a[href='/refinery/resources/#{resource.id}/edit']")
+          page.should have_selector("a[href='/#{Refinery::Core.config.admin_prefix_path}/resources/#{resource.id}/edit']")
 
           click_link "Edit this file"
 
           page.should have_content("Download current file or replace it with this one...")
-          page.should have_selector("a[href*='/refinery/resources']")
+          page.should have_selector("a[href*='/#{Refinery::Core.config.admin_prefix_path}/resources']")
 
           attach_file "resource_file", Refinery.roots(:'refinery/resources').join("spec/fixtures/refinery_is_awesome2.txt")
           click_button "Save"
@@ -100,7 +100,7 @@ module Refinery
 
         it "removes file" do
           visit refinery.admin_resources_path
-          page.should have_selector("a[href='/refinery/resources/#{resource.id}']")
+          page.should have_selector("a[href='/#{Refinery::Core.config.admin_prefix_path}/resources/#{resource.id}']")
 
           click_link "Remove this file forever"
 
