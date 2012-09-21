@@ -8,7 +8,7 @@ module Refinery
       visit refinery.admin_dashboard_path
 
       page.should have_content("Log out")
-      page.should have_selector("a[href='/refinery/logout']")
+      page.should have_selector("a[href='/admin/logout']")
     end
 
     context "when in backend" do
@@ -36,7 +36,7 @@ module Refinery
 
       it "have a 'switch to your website editor' button" do
         page.should have_content("Switch to your website editor")
-        page.should have_selector("a[href='/refinery']")
+        page.should have_selector("a[href='/']")
       end
 
       it "switches to backend" do

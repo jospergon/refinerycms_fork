@@ -7,14 +7,14 @@ module Refinery
     context "links" do
       it "have iframe src" do
         visit refinery.admin_dialog_path('Link')
-        page.should have_selector("iframe[src='/refinery/pages_dialogs/link_to']")
+        page.should have_selector("iframe[src='/admin/pages_dialogs/link_to']")
       end
     end
 
     context "images" do
       it "have iframe src" do
         visit refinery.admin_dialog_path('Image')
-        page.should have_selector("iframe[src='/refinery/images/insert?modal=true']")
+        page.should have_selector("iframe[src='/admin/images/insert?modal=true']")
       end
     end
 
