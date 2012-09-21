@@ -1,6 +1,6 @@
 module Refinery
   class Role < Refinery::Core::BaseModel
-    set_table_name "betycms_roles"
+    self.table_name = "betycms_roles"
 
     has_and_belongs_to_many :users, :join_table => :betycms_roles_users
 
