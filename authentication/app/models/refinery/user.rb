@@ -3,11 +3,11 @@ require 'friendly_id'
 
 module Refinery
   class User < Refinery::Core::BaseModel
-    self.table_name = "betycms_users"
+    self.table_name = "#{Refinery::Core.config.table_prefix}users"
 
     extend FriendlyId
 
-    has_and_belongs_to_many :roles, :join_table => :betycms_roles_users
+    has_and_belongs_to_many :roles, :join_table => "#{Refinery::Core.config.table_prefix}roles_users"
 
     has_many :plugins, :class_name => "UserPlugin", :order => "position ASC", :dependent => :destroy
     friendly_id :username

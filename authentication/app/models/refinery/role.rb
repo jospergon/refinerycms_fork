@@ -1,8 +1,8 @@
 module Refinery
   class Role < Refinery::Core::BaseModel
-    self.table_name = "betycms_roles"
+    self.table_name = "#{Refinery::Core.config.table_prefix}roles"
 
-    has_and_belongs_to_many :users, :join_table => :betycms_roles_users
+    has_and_belongs_to_many :users, :join_table => "#{Refinery::Core.config.table_prefix}roles_users"
 
     before_validation :camelize_title
     validates :title, :uniqueness => true

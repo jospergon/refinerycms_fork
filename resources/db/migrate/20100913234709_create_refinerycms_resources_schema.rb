@@ -1,6 +1,6 @@
 class CreateRefinerycmsResourcesSchema < ActiveRecord::Migration
   def change
-    create_table :betycms_resources do |t|
+    create_table "#{Refinery::Core.config.table_prefix}resources" do |t|
       t.string   :file_mime_type
       t.string   :file_name
       t.integer  :file_size
