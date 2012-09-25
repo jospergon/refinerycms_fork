@@ -7,7 +7,7 @@ module Refinery
 
     extend FriendlyId
 
-    has_and_belongs_to_many :roles, :join_table => :betycms_roles_users
+    belongs_to :role
 
     has_many :plugins, :class_name => "UserPlugin", :order => "position ASC", :dependent => :destroy
     friendly_id :username
@@ -54,7 +54,6 @@ module Refinery
     def can_delete?(user_to_delete = self)
       user_to_delete.persisted? &&
         !user_to_delete.has_role?(:superuser) &&
-        ::Refinery::Role[:refinery].users.any? &&
         id != user_to_delete.id
     end
 
@@ -65,26 +64,24 @@ module Refinery
       )
     end
 
-    def add_role(title)
-      raise ArgumentException, "Role should be the title of the role not a role object." if title.is_a?(::Refinery::Role)
-      roles << ::Refinery::Role[title] unless has_role?(title)
-    end
-
     def has_role?(title)
       raise ArgumentException, "Role should be the title of the role not a role object." if title.is_a?(::Refinery::Role)
-      roles.any?{|r| r.title == title.to_s.camelize}
+      if title.to_s.camelize == "Refinery"
+        true
+      else
+        role.blank? ? false : role.title == title.to_s.camelize
+      end
     end
 
     def create_first
       if valid?
         # first we need to save user
         save
-        # add refinery role
-        add_role(:refinery)
-        # add superuser role if there are no other users
-        add_role(:superuser) if ::Refinery::Role[:refinery].users.count == 1
+        # set superuser role if there are no other users
+        self.role = ::Refinery::Role[:superuser] if ::Refinery::User.count == 1
         # add plugins
         self.plugins = Refinery::Plugins.registered.in_menu.names
+        save
       end
 
       # return true/false based on validations

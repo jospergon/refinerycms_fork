@@ -1,14 +1,5 @@
 class CreateRefinerycmsAuthenticationSchema < ActiveRecord::Migration
   def change
-    # Postgres apparently requires the roles_users table to exist before creating the roles table.
-    create_table :betycms_roles_users, :id => false do |t|
-      t.integer :user_id
-      t.integer :role_id
-    end
-
-    add_index :betycms_roles_users, [:role_id, :user_id]
-    add_index :betycms_roles_users, [:user_id, :role_id]
-
     create_table :betycms_roles do |t|
       t.string :title
     end
@@ -26,6 +17,7 @@ class CreateRefinerycmsAuthenticationSchema < ActiveRecord::Migration
       t.string    :username,            :null => false
       t.string    :email,               :null => false
       t.string    :encrypted_password,  :null => false
+      t.integer   :role_id
       t.datetime  :current_sign_in_at
       t.datetime  :last_sign_in_at
       t.string    :current_sign_in_ip

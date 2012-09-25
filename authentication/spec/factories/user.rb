@@ -12,10 +12,11 @@ FactoryGirl.define do
     sequence(:email) { |n| "refinery#{n}@refinerycms.com" }
     password  "refinerycms"
     password_confirmation "refinerycms"
+    role { ::Refinery::Role[:refinery] }
   end
 
   factory :refinery_user, :parent => :user do
-    roles { [ ::Refinery::Role[:refinery] ] }
+    role { ::Refinery::Role[:refinery] }
 
     after_create do |user|
       ::Refinery::Plugins.registered.each_with_index do |plugin, index|
@@ -25,11 +26,11 @@ FactoryGirl.define do
   end
 
   factory :refinery_superuser, :parent => :refinery_user do
-    roles { [ ::Refinery::Role[:refinery], ::Refinery::Role[:superuser] ]}
+    role { ::Refinery::Role[:superuser] }
   end
 
   factory :refinery_translator, :parent => :user do
-    roles { [ ::Refinery::Role[:refinery], ::Refinery::Role[:translator] ] }
+    role { ::Refinery::Role[:translator] }
 
     after_create do |user|
       user.plugins.create(:name => 'refinery_pages', :position => 0)

@@ -2,7 +2,9 @@ module Refinery
   class Role < Refinery::Core::BaseModel
     self.table_name = "betycms_roles"
 
-    has_and_belongs_to_many :users, :join_table => :betycms_roles_users
+    default_scope where("title != 'Refinery'")
+
+    has_many :users
 
     before_validation :camelize_title
     validates :title, :uniqueness => true

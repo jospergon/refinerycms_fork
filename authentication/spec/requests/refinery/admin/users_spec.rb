@@ -32,7 +32,7 @@ describe "manage users" do
         visit_and_fill_form
 
         within "#roles" do
-          check "roles_#{Refinery::Role.first.title.downcase}"
+          choose "roles_#{Refinery::Role.first.title.downcase}"
         end
         click_button "Save"
 

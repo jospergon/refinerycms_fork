@@ -52,7 +52,7 @@ module Refinery
     end
 
     def just_installed?
-      Refinery::Role[:refinery].users.empty?
+      Refinery::User.all.empty?
     end
 
     def local_request?

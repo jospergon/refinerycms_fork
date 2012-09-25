@@ -7,26 +7,6 @@ module Refinery
     let(:refinery_user) { FactoryGirl.create(:refinery_user) }
 
     context "Roles" do
-      context "add_role" do
-        it "raises Exception when Role object is passed" do
-          proc {user.add_role(Refinery::Role.new)}.should raise_exception
-        end
-
-        it "adds a Role to the User when role not yet assigned to User" do
-          proc {
-            user.add_role(:new_role)
-          }.should change(user.roles, :count).by(1)
-          user.roles.collect(&:title).should include("NewRole")
-        end
-
-        it "does not add a Role to the User when this Role is already assigned to User" do
-          proc {
-            refinery_user.add_role(:refinery)
-          }.should_not change(refinery_user.roles, :count).by(1)
-          refinery_user.roles.collect(&:title).should include("Refinery")
-        end
-      end
-
       context "has_role" do
         it "raises Exception when Role object is passed" do
           proc{ user.has_role?(Refinery::Role.new)}.should raise_exception
@@ -42,8 +22,8 @@ module Refinery
       end
 
       describe "role association" do
-        it "have a roles attribute" do
-          user.should respond_to(:roles)
+        it "have a role attribute" do
+          user.should respond_to(:role)
         end
       end
     end
@@ -86,7 +66,7 @@ module Refinery
       let(:user_not_persisted) { FactoryGirl.build(:refinery_user) }
       let(:super_user) do
         super_user = FactoryGirl.create(:refinery_user)
-        super_user.add_role(:superuser)
+        super_user.role = ::Refinery::Role[:superuser]
         super_user
       end
 
@@ -99,24 +79,8 @@ module Refinery
           refinery_user.can_delete?(super_user).should be_false
         end
 
-        it "if user count with refinery role < 1" do
-          ::Refinery::Role[:refinery].users.delete([ refinery_user, super_user ])
-          super_user.can_delete?(refinery_user).should be_false
-        end
-
         it "user himself" do
           refinery_user.can_delete?(refinery_user).should be_false
-        end
-      end
-
-      context "allow to delete" do
-        it "if user count with refinery role = 1" do
-          ::Refinery::Role[:refinery].users.delete(refinery_user)
-          super_user.can_delete?(refinery_user).should be_true
-        end
-
-        it "if all conditions return true" do
-          super_user.can_delete?(refinery_user).should be_true
         end
       end
     end
@@ -125,7 +89,7 @@ module Refinery
       let(:user_not_persisted) { FactoryGirl.build(:refinery_user) }
       let(:super_user) do
         super_user = FactoryGirl.create(:refinery_user)
-        super_user.add_role(:superuser)
+        super_user.role = ::Refinery::Role[:superuser]
         super_user
       end
       let(:user_persisted) { FactoryGirl.create(:refinery_user)}
@@ -195,12 +159,8 @@ module Refinery
         first
       end
 
-      it "adds refinery role" do
-        first_user.roles.collect(&:title).should include("Refinery")
-      end
-
       it "adds superuser role" do
-        first_user.roles.collect(&:title).should include("Superuser")
+        first_user.role.title.should == "Superuser"
       end
 
       it "adds registered plugins" do

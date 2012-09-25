@@ -15,18 +15,18 @@ module Refinery
       end
 
       def create
-        @user = Refinery::User.new(params[:user].except(:roles))
+        @user = Refinery::User.new(params[:user].except(:role))
         @selected_plugin_names = params[:user][:plugins] || []
-        @selected_role_names = params[:user][:roles] || []
+        @selected_role_name = params[:user][:role] || []
 
         if @user.save
           @user.plugins = @selected_plugin_names
           # if the user is a superuser and can assign roles according to this site's
           # settings then the roles are set with the POST data.
           unless current_refinery_user.has_role?(:superuser) and Refinery::Authentication.superuser_can_assign_roles
-            @user.add_role(:refinery)
+            @user.role =  Refinery::Role[:refinery]
           else
-            @user.roles = @selected_role_names.collect { |r| Refinery::Role[r.downcase.to_sym] }
+            @user.role = Refinery::Role[@selected_role_name.downcase.to_sym]
           end
 
           redirect_to refinery.admin_users_path,
@@ -46,21 +46,21 @@ module Refinery
         redirect_unless_user_editable!
 
         # Store what the user selected.
-        @selected_role_names = params[:user].delete(:roles) || []
+        @selected_role_name = params[:user][:role] || nil
         unless current_refinery_user.has_role?(:superuser) and Refinery::Authentication.superuser_can_assign_roles
-          @selected_role_names = @user.roles.collect(&:title)
+          @selected_role_name = @user.role.title
         end
         @selected_plugin_names = params[:user][:plugins]
 
         # Prevent the current user from locking themselves out of the User manager
-        if current_refinery_user.id == @user.id and (params[:user][:plugins].exclude?("refinery_users") || @selected_role_names.map(&:downcase).exclude?("refinery"))
+        if current_refinery_user.id == @user.id and params[:user][:plugins].exclude?("refinery_users")
           flash.now[:error] = t('cannot_remove_user_plugin_from_current_user', :scope => 'refinery.admin.users.update')
           render :edit
         else
           # Store the current plugins and roles for this user.
           @previously_selected_plugin_names = @user.plugins.collect(&:name)
-          @previously_selected_roles = @user.roles
-          @user.roles = @selected_role_names.collect { |r| Refinery::Role[r.downcase.to_sym] }
+          @previously_selected_role = @user.role
+          @user.role = Refinery::Role[@selected_role_name.downcase.to_sym]
           if params[:user][:password].blank? and params[:user][:password_confirmation].blank?
             params[:user].except!(:password, :password_confirmation)
           end
@@ -70,7 +70,7 @@ module Refinery
                         :notice => t('updated', :what => @user.username, :scope => 'refinery.crudify')
           else
             @user.plugins = @previously_selected_plugin_names
-            @user.roles = @previously_selected_roles
+            @user.role = @previously_selected_role
             @user.save
             render :edit
           end

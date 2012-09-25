@@ -57,10 +57,10 @@
         <% @available_roles.each do |role|
           downcased_title = (title = role[:title]).downcase -%>
           <li>
-            <%= check_box_tag 'user[roles][]', downcased_title, @user.has_role?(title),
+            <%= radio_button_tag 'user[role]', downcased_title, @user.has_role?(title),
                               :id => "roles_#{downcased_title}" %>
-            <%= f.label 'user[roles][]',
-                        t(downcased_title, :scope => 'refinery.roles', :default => title),
+            <%= f.label 'user[role]',
+                        t(downcased_title, :scope => 'refinery.role', :default => title),
                         :class => 'stripped',
                         :for => "roles_#{downcased_title}" %>
           </li>
