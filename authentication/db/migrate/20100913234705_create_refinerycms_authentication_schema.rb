@@ -1,19 +1,19 @@
 class CreateRefinerycmsAuthenticationSchema < ActiveRecord::Migration
   def change
-    create_table :betycms_roles do |t|
+    create_table "#{Refinery::Core.config.table_prefix}roles" do |t|
       t.string :title
     end
 
-    create_table :betycms_user_plugins do |t|
+    create_table "#{Refinery::Core.config.table_prefix}user_plugins" do |t|
       t.integer :user_id
       t.string  :name
       t.integer :position
     end
 
-    add_index :betycms_user_plugins, :name
-    add_index :betycms_user_plugins, [:user_id, :name], :unique => true
+    add_index "#{Refinery::Core.config.table_prefix}user_plugins", :name
+    add_index "#{Refinery::Core.config.table_prefix}user_plugins", [:user_id, :name], :unique => true
 
-    create_table :betycms_users do |t|
+    create_table "#{Refinery::Core.config.table_prefix}users" do |t|
       t.string    :username,            :null => false
       t.string    :email,               :null => false
       t.string    :encrypted_password,  :null => false
@@ -30,6 +30,6 @@ class CreateRefinerycmsAuthenticationSchema < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :betycms_users, :id
+    add_index "#{Refinery::Core.config.table_prefix}users", :id
   end
 end

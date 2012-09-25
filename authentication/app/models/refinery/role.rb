@@ -1,6 +1,6 @@
 module Refinery
   class Role < Refinery::Core::BaseModel
-    self.table_name = "betycms_roles"
+    self.table_name = "#{Refinery::Core.config.table_prefix}roles"
 
     default_scope where("title != 'Refinery'")
 

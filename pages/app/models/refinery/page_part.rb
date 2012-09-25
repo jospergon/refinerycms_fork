@@ -1,9 +1,9 @@
 module Refinery
   class PagePart < Refinery::Core::BaseModel
-    self.table_name = "betycms_page_parts"
+    self.table_name = "#{Refinery::Core.config.table_prefix}page_parts"
 
-    attr_accessible :title, :content, :position, :body, :betycms_page_id
-    belongs_to :page, :foreign_key => :betycms_page_id
+    attr_accessible :title, :content, :position, :body, "#{Refinery::Core.config.table_prefix}page_id"
+    belongs_to :page, :foreign_key => "#{Refinery::Core.config.table_prefix}page_id"
 
     validates :title, :presence => true
     alias_attribute :content, :body

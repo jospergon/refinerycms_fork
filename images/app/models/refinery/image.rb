@@ -2,7 +2,7 @@ require 'dragonfly'
 
 module Refinery
   class Image < Refinery::Core::BaseModel
-    self.table_name = "betycms_images"
+    self.table_name = "#{Refinery::Core.config.table_prefix}images"
 
     ::Refinery::Images::Dragonfly.setup!
 

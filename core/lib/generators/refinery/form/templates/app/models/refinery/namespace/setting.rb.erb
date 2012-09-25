@@ -1,7 +1,7 @@
 module Refinery
   module <%= namespacing %>
     class Setting < Refinery::Core::BaseModel
-        self.table_name = "betycms_#{namespacing.downcase}_settings"
+        self.table_name = "#{Refinery::Core.config.table_prefix}#{namespacing.downcase}_settings"
 
       class << self
         def confirmation_body
