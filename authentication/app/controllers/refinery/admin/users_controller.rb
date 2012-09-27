@@ -7,6 +7,9 @@ module Refinery
               :title_attribute => 'username',
               :xhr_paging => true
 
+      # Set Cancan Permissions to crudify actions
+      include ::Refinery::SetCrudifyPermissionsController
+
       before_filter :load_available_plugins_and_roles, :only => [:new, :create, :edit, :update]
 
       def new

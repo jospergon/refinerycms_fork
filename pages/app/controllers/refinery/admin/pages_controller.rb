@@ -1,6 +1,10 @@
 module Refinery
   module Admin
     class PagesController < Refinery::AdminController
+
+      # Set Cancan Permissions to crudify actions
+      include ::Refinery::SetCrudifyPermissionsController
+
       cache_sweeper Refinery::PageSweeper
 
       crudify :'refinery/page',

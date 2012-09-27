@@ -3,6 +3,9 @@ module Refinery
     class DashboardController < Refinery::AdminController
 
       def index
+        # Set Cancan control access
+        authorize! :read, Refinery::Dashboard
+
         @recent_activity = []
 
         ::Refinery::Plugins.active.each do |plugin|

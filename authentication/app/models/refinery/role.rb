@@ -5,6 +5,7 @@ module Refinery
     default_scope where("title != 'Refinery'")
 
     has_many :users
+    has_and_belongs_to_many :permissions, :join_table => "#{Refinery::Core.config.table_prefix}roles_permissions"
 
     before_validation :camelize_title
     validates :title, :uniqueness => true

@@ -7,6 +7,9 @@ module Refinery
               :sortable => false,
               :xhr_paging => true
 
+      # Set Cancan Permissions to crudify actions
+      include ::Refinery::SetCrudifyPermissionsController
+
       before_filter :change_list_mode_if_specified, :init_dialog
 
       def new

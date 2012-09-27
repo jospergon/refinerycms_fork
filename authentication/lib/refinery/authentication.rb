@@ -1,10 +1,12 @@
 require 'refinerycms-core'
 require 'devise'
 require 'friendly_id'
+require 'cancan'
 
 module Refinery
   autoload :AuthenticationGenerator, 'generators/refinery/authentication/authentication_generator'
   autoload :AuthenticatedSystem, 'refinery/authenticated_system'
+  autoload :SetCrudifyPermissionsController, 'refinery/set_crudify_permissions_controller'
 
   class << self
     attr_accessor :authentication_login_field

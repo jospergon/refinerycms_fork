@@ -6,6 +6,9 @@ module Refinery
               :order => "updated_at DESC",
               :xhr_paging => true
 
+      # Set Cancan Permissions to crudify actions
+      include ::Refinery::SetCrudifyPermissionsController
+
       before_filter :init_dialog
 
       def new

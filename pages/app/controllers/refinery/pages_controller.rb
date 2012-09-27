@@ -1,5 +1,6 @@
 module Refinery
   class PagesController < ::ApplicationController
+
     before_filter :find_page, :set_canonical, :except => [:preview]
     before_filter :find_page_for_preview, :only => [:preview]
 

@@ -7,5 +7,10 @@ module Refinery
     helper Refinery::Core::Engine.helpers
     include Refinery::Admin::BaseController
 
+    # Set current user necesary for cancan access control
+    def current_user
+      @current_user ||= current_refinery_user
+    end
+
   end
 end
